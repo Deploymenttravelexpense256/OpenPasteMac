@@ -5,7 +5,7 @@ set -euo pipefail
 DISPLAY_NAME="OpenPasteMac"
 APP_NAME="OpenPasteMac"
 BUNDLE_ID="com.xfajarr.openpastemac"
-VERSION="0.1.0"
+VERSION="0.1.1"
 MIN_MACOS="13.0"
 
 # ─── Paths ───────────────────────────────────────────────────────────────────
