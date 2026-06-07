@@ -1,117 +1,146 @@
 # OpenPasteMac
 
-A lightweight macOS clipboard manager.
+[![macOS](https://img.shields.io/badge/macOS-13%2B-black.svg)](https://github.com/xfajarr/openpastemac)
+[![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## Behavior
+A lightweight, open-source clipboard manager for macOS. Native Swift, fast, minimal, keyboard-first.
 
-- **Click outside** the panel to dismiss it
-- Pressing the hotkey again also dismisses it
-- Clicking the menu bar icon toggles the panel
-- Right-click the menu bar icon for Settings / Quit
+<p align="center">
+  <img src="images/openpastemac-1.png" alt="OpenPasteMac" width="700">
+</p>
 
-## Shortcuts
+## What it does
+
+A fast, lightweight clipboard manager for macOS. Access your clipboard history instantly with a global shortcut, browse items in a shelf-style interface, and paste without switching apps.
+
+### Clipboard History
+
+- **Menu bar app** with a global shortcut (`⌘⇧V`) to open the clipboard shelf
+- **Auto-paste** selected items back into the previously active app
+- **Supports** text, URLs, images, and files on the clipboard
+- **Link previews** for saved URLs with metadata fetching
+- **Persistence** — clipboard history is restored across launches via Application Support
+
+### Organization
+
+- **Pinboard** — pin important items for quick access
+- **Search** — filter clipboard history in real time
+- **Quick select** — paste items 1–9 directly with `⌘1`–`⌘9`
+
+## Install
+
+| Method | Command / Steps |
+| --- | --- |
+| **Homebrew** | `brew install --cask openpastemac` |
+| **Download** | Go to [Releases](https://github.com/xfajarr/openpastemac/releases), download the latest `.dmg`, open it, and drag OpenPasteMac to Applications |
+| **Build from source** | `git clone https://github.com/xfajarr/openpastemac.git && cd openpastemac && make install` |
+
+## Permissions
+
+OpenPasteMac requires **Accessibility** access to automatically paste items into other apps.
+
+On first launch, macOS should prompt you. If not:
+
+**System Settings → Privacy & Security → Accessibility**
+
+Without this permission, OpenPasteMac still copies items to the clipboard — you just need to paste manually with `⌘V`.
+
+## Usage
+
+1. Launch OpenPasteMac — it appears in your **menu bar** (top right)
+2. Press `⌘⇧V` to open the clipboard shelf
+3. Browse recent items with `←` / `→`
+4. Press `Enter` to paste the selected item
+5. Press `Esc` or click outside to dismiss
+
+### Shortcuts
 
 | Shortcut | Action |
-|---|---|
-| ⌘ Shift V | Toggle panel (works system-wide) |
-| ↑ / ↓ | Navigate list |
-| ↵ Enter | Paste selected item |
-| ⌘ 1–9 | Paste item 1–9 directly |
-| Esc | Close panel |
-| Click item | Paste item |
-
----
-
-## Installation (permanent — runs as a real app)
-
-### Option A — One command
-
-```bash
-make install
-```
-
-This builds a release binary, packages it as `ClipboardHistory.app`, copies it to
-`/Applications`, and opens it.
-
-### Option B — Step by step
-
-```bash
-# 1. Build the .app bundle
-./scripts/build-app.sh
-
-# 2. Copy to Applications
-cp -r dist/ClipboardHistory.app /Applications/
-
-# 3. Open it
-open /Applications/ClipboardHistory.app
-```
-
-### Option C — DMG (to share with others)
-
-```bash
-make dmg
-# Produces: dist/ClipboardHistory.dmg
-```
-
-Distribute the DMG. Recipients double-click it and drag the app to Applications.
-
----
-
-## First-launch setup
-
-### 1 — Accessibility (required for auto-paste)
-
-On the first launch a dialog will appear asking to grant **Accessibility** access.
-Click **Open System Settings** and enable Clipboard History in the list.
-
-> If you skip this, the app still works — it puts the item on your clipboard —
-> you just need to press ⌘V yourself.
-
-Path: **System Settings → Privacy & Security → Accessibility**
-
-### 2 — Launch at Login (optional)
-
-So the app is always running without you needing to start it manually:
-
-1. Make sure the app is installed in `/Applications` (not just run from the project folder)
-2. Right-click the **menu bar icon** → **Launch at Login**
-
-This uses macOS's built-in login item system (`SMAppService`). It only works when
-running as a proper `.app` bundle from Applications.
-
----
+| --- | --- |
+| `⌘⇧V` | Toggle clipboard shelf |
+| `←` / `→` | Navigate items |
+| `Enter` | Paste selected item |
+| `⌘1`–`⌘9` | Paste item 1–9 directly |
+| `Esc` | Close shelf |
 
 ## Development
 
+### Requirements
+
+- macOS 13+
+- Xcode Command Line Tools
+
 ```bash
-# Quick run (debug build, no install needed)
+xcode-select --install
+```
+
+### Build and run
+
+```bash
 make run
-
-# Or manually
-swift build
-.build/debug/ClipboardHistory
 ```
 
-## Project layout
+### Make commands
 
-```
+| Command | What it does |
+| --- | --- |
+| `make build` | Debug build |
+| `make run` | Build and launch |
+| `make app` | Build the `.app` bundle |
+| `make dmg` | Create distributable DMG |
+| `make install` | Install to `/Applications` |
+| `make uninstall` | Remove from `/Applications` |
+| `make clean` | Remove build artifacts |
+
+## Architecture
+
+Native Swift / SwiftUI. No external dependencies.
+
+| Framework | Used for |
+| --- | --- |
+| AppKit | Menu bar integration, global hotkeys, pasteboard access |
+| SwiftUI | Shelf UI, card views, overlays, editing sheets |
+| LinkPresentation | URL metadata and link previews |
+| ServiceManagement | Launch at Login support |
+
+### Project structure
+
+```text
 Sources/
-├── main.swift              Entry point
-├── AppDelegate.swift       Menu bar, panel, hotkeys, paste, click-outside
-├── ClipboardItem.swift     Data model
-├── ClipboardStore.swift    Observable store + disk persistence
-├── ClipboardMonitor.swift  NSPasteboard polling
+├── main.swift                  # App entry point
+├── AppDelegate.swift           # Menu bar, shelf panel, hotkeys, paste behavior
+├── ClipboardItem.swift         # Clipboard item model and content types
+├── ClipboardMonitor.swift      # Pasteboard change watcher
+├── ClipboardStore.swift        # In-memory state, filtering, pinboards, persistence
+├── LinkPreviewService.swift    # Async URL metadata fetching
+├── Pinboard.swift              # Pinboard data model
+├── ShortcutManager.swift       # Global shortcut configuration
+├── SourceApp.swift             # Source application tracking
 └── Views/
-    ├── ClipboardPanelView.swift  Main SwiftUI panel
-    ├── ClipboardItemRow.swift    List row
-    └── VisualEffectView.swift    Vibrancy bridge
+    ├── ClipboardCardView.swift
+    ├── ClipboardShelfView.swift
+    ├── EditItemSheet.swift
+    ├── ItemPreviewOverlay.swift
+    ├── PinboardTabBar.swift
+    └── VisualEffectView.swift
 
 scripts/
-├── build-app.sh   Builds release binary + assembles .app bundle → dist/
-└── create-dmg.sh  Wraps the .app in a distributable DMG → dist/
+├── build-app.sh               # Builds the .app bundle
+└── create-dmg.sh              # Creates distributable DMG
 ```
 
-## Requirements
+## Contributing
 
-- macOS 13 Ventura or later
-- Xcode Command Line Tools: `xcode-select --install`
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, project structure, and coding guidelines.
+
+1. Open an issue to discuss a bug or feature idea
+2. Fork the repository
+3. Create a focused branch
+4. Submit a pull request with a clear description
+
+Keep pull requests small, scoped, and easy to review.
+
+## License
+
+MIT. See [LICENSE](LICENSE) for details.
