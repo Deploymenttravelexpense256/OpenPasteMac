@@ -1,6 +1,6 @@
-# Clipboard History
+# OpenPasteMac
 
-A lightweight macOS clipboard manager — menu bar icon, global hotkey, zero friction.
+A lightweight macOS clipboard manager.
 
 ## Behavior
 
