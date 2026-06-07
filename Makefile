@@ -4,7 +4,7 @@ build:
 	swift build
 
 run: build
-	.build/debug/ClipboardHistory
+	.build/debug/OpenPasteMac
 
 app:
 	./scripts/build-app.sh
@@ -13,12 +13,12 @@ dmg: app
 	./scripts/create-dmg.sh
 
 install: app
-	cp -r dist/ClipboardHistory.app /Applications/
-	open /Applications/ClipboardHistory.app
-	@echo "✓ Installed to /Applications/ClipboardHistory.app"
+	cp -r dist/OpenPasteMac.app /Applications/
+	open /Applications/OpenPasteMac.app
+	@echo "✓ Installed to /Applications/OpenPasteMac.app"
 
 uninstall:
-	rm -rf /Applications/ClipboardHistory.app
+	rm -rf /Applications/OpenPasteMac.app
 	@echo "✓ Removed from /Applications"
 
 clean:

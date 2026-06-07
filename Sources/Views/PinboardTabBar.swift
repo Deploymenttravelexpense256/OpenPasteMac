@@ -68,7 +68,7 @@ struct PinboardTabBar: View {
                 Divider()
                 Button("Clear All") { store.clearNonPinned() }
                 Divider()
-                Button("Quit Clipboard History") { NSApp.terminate(nil) }
+                Button("Quit OpenPasteMac") { NSApp.terminate(nil) }
             } label: {
                 Image(systemName: "ellipsis")
                     .font(.system(size: 13, weight: .medium))

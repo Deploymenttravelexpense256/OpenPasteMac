@@ -2,9 +2,10 @@
 set -euo pipefail
 
 # ─── Config ──────────────────────────────────────────────────────────────────
-APP_NAME="ClipboardHistory"
-BUNDLE_ID="com.jarprojects.clipboardhistory"
-VERSION="1.0.0"
+DISPLAY_NAME="OpenPasteMac"
+APP_NAME="OpenPasteMac"
+BUNDLE_ID="com.xfajarr.openpastemac"
+VERSION="0.1.0"
 MIN_MACOS="13.0"
 
 # ─── Paths ───────────────────────────────────────────────────────────────────
@@ -19,12 +20,25 @@ cd "$ROOT_DIR"
 echo "▸ Building release binary..."
 swift build -c release
 
+echo "▸ Locating binary..."
+# Detect the actual binary regardless of the SPM target name
+# Use -L to follow the .build/release symlink on macOS
+BINARY=$(find -L .build/release -maxdepth 1 -type f -perm +111 \
+  ! -name "*.dylib" ! -name "*.a" ! -name "*.product" \
+  | grep -iE "(OpenPasteMac|OpenPaste|OpenClip)" | head -1)
+if [ -z "$BINARY" ]; then
+  # Fallback: any non-library executable
+  BINARY=$(find -L .build/release -maxdepth 1 -type f -perm +111 \
+    ! -name "*.dylib" ! -name "*.a" ! -name "*.product" | head -1)
+fi
+echo "  Using binary: $BINARY"
+
 echo "▸ Assembling .app bundle..."
 rm -rf "$APP_PATH"
 mkdir -p "$CONTENTS/MacOS" "$CONTENTS/Resources"
 
-# Copy binary
-cp ".build/release/$APP_NAME" "$CONTENTS/MacOS/"
+# Copy binary (renamed to the canonical APP_NAME)
+cp "$BINARY" "$CONTENTS/MacOS/$APP_NAME"
 
 # ─── Info.plist ──────────────────────────────────────────────────────────────
 cat > "$CONTENTS/Info.plist" << PLIST
@@ -33,21 +47,21 @@ cat > "$CONTENTS/Info.plist" << PLIST
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>$BUNDLE_ID</string>
+    <string>${BUNDLE_ID}</string>
     <key>CFBundleName</key>
-    <string>$APP_NAME</string>
+    <string>${APP_NAME}</string>
     <key>CFBundleDisplayName</key>
-    <string>Clipboard History</string>
+    <string>${DISPLAY_NAME}</string>
     <key>CFBundleExecutable</key>
-    <string>$APP_NAME</string>
+    <string>${APP_NAME}</string>
     <key>CFBundleVersion</key>
-    <string>$VERSION</string>
+    <string>${VERSION}</string>
     <key>CFBundleShortVersionString</key>
-    <string>$VERSION</string>
+    <string>${VERSION}</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>LSMinimumSystemVersion</key>
-    <string>$MIN_MACOS</string>
+    <string>${MIN_MACOS}</string>
     <key>LSUIElement</key>
     <true/>
     <key>NSHighResolutionCapable</key>
@@ -57,9 +71,9 @@ cat > "$CONTENTS/Info.plist" << PLIST
     <key>NSSupportsAutomaticGraphicsSwitching</key>
     <true/>
     <key>NSAccessibilityUsageDescription</key>
-    <string>Clipboard History needs accessibility access to automatically paste items into other apps when you select them.</string>
+    <string>${DISPLAY_NAME} needs accessibility access to automatically paste items into other apps when you select them.</string>
     <key>NSAppleEventsUsageDescription</key>
-    <string>Clipboard History uses Apple Events to manage clipboard content.</string>
+    <string>${DISPLAY_NAME} uses Apple Events to manage clipboard content.</string>
 </dict>
 </plist>
 PLIST

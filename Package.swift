@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "ClipboardHistory",
+    name: "OpenPasteMac",
     platforms: [.macOS(.v13)],
     targets: [
         .executableTarget(
-            name: "ClipboardHistory",
+            name: "OpenPasteMac",
             path: "Sources",
             linkerSettings: [
                 .linkedFramework("Carbon", .when(platforms: [.macOS])),

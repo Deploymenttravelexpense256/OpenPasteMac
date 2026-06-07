@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_NAME="ClipboardHistory"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 DIST_DIR="$ROOT_DIR/dist"
-APP_PATH="$DIST_DIR/$APP_NAME.app"
-DMG_PATH="$DIST_DIR/$APP_NAME.dmg"
+APP_PATH="$DIST_DIR/OpenPasteMac.app"
+DMG_PATH="$DIST_DIR/OpenPasteMac.dmg"
 STAGING="$DIST_DIR/.dmg_staging"
 
 if [ ! -d "$APP_PATH" ]; then
@@ -23,7 +22,7 @@ cp -r "$APP_PATH" "$STAGING/"
 ln -sf /Applications "$STAGING/Applications"
 
 hdiutil create \
-    -volname "Clipboard History" \
+    -volname "OpenPasteMac" \
     -srcfolder "$STAGING" \
     -ov \
     -format UDZO \
@@ -34,4 +33,4 @@ rm -rf "$STAGING"
 
 echo ""
 echo "✓ Created: $DMG_PATH"
-echo "  Share this file — users drag ClipboardHistory.app to Applications to install."
+echo "  Share this file — users drag OpenPasteMac.app to Applications to install."

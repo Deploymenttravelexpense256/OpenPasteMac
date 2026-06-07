@@ -132,7 +132,7 @@ class ClipboardStore: ObservableObject {
     private let storageURL: URL = {
         let dir = FileManager.default
             .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("ClipboardHistory", isDirectory: true)
+            .appendingPathComponent("OpenPasteMac", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir.appendingPathComponent("store.json")
     }()

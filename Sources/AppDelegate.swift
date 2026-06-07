@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        let img = NSImage(systemSymbolName: "doc.on.clipboard.fill", accessibilityDescription: "Clipboard History")
+        let img = NSImage(systemSymbolName: "doc.on.clipboard.fill", accessibilityDescription: "OpenPasteMac")
         img?.isTemplate = true
         statusItem.button?.image = img
         statusItem.button?.target = self
@@ -65,7 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(launchItem)
 
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit Clipboard History", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: "Quit OpenPasteMac", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 
         menu.popUp(positioning: nil, at: NSPoint(x: -1, y: button.bounds.height + 4), in: button)
     }
